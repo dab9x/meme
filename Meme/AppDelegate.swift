@@ -18,6 +18,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         return true
     }
+    
+    func deleteMeme(meme:MemeEntry) {
+        var index:Int = getIndex(meme);
+        if (index == -1) {
+            return;
+        }
+        self.memes.removeAtIndex(index);
+    }
+    
+    func getMeme(meme:MemeEntry) -> MemeEntry {
+        var index:Int = getIndex(meme);
+        if (index == -1) {
+            return meme;
+        }
+        return self.memes[index];
+    }
+    
+    func sortMemes() {
+        self.memes.sort({(meme1:MemeEntry, meme2:MemeEntry) -> Bool in
+            return meme1.uuid > meme2.uuid;
+        });
+    }
+    
+    func getIndex(meme:MemeEntry) -> Int {
+        self.sortMemes();
+        for (index, nextMeme) in enumerate(self.memes) {
+            if (nextMeme.uuid! == meme.uuid!) {
+                return index;
+            }
+        }
+        return -1;
+    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

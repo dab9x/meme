@@ -198,34 +198,74 @@
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V0g-Xp-gfX">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NWQ-GO-PBC">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="3VS-QW-pcd"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="Edit" id="Ymq-U8-c4L">
+                                        <connections>
+                                            <action selector="editMeme:" destination="rWa-4s-u45" id="6c3-zC-jeg"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="iCI-kl-GOF"/>
+                                    <barButtonItem title="Delete" id="5vn-Lu-veQ">
+                                        <connections>
+                                            <action selector="deleteMeme:" destination="rWa-4s-u45" id="jXV-Xj-RXk"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="3VS-QW-pcd"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="3VS-QW-pcd"/>
+                                    </mask>
+                                </variation>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="V0g-Xp-gfX" firstAttribute="leading" secondItem="rXc-En-a3S" secondAttribute="leadingMargin" constant="-16" id="41n-8o-lal"/>
                             <constraint firstAttribute="trailingMargin" secondItem="V0g-Xp-gfX" secondAttribute="trailing" constant="-16" id="Us0-Wy-eBl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NWQ-GO-PBC" secondAttribute="trailing" constant="-16" id="ZCU-WQ-Cc0"/>
                             <constraint firstItem="V0g-Xp-gfX" firstAttribute="top" secondItem="HmY-qS-Aj8" secondAttribute="bottom" constant="166" id="fL0-JD-Zqp"/>
+                            <constraint firstItem="f9a-mH-1Gr" firstAttribute="top" secondItem="NWQ-GO-PBC" secondAttribute="bottom" id="fsl-R8-JUR"/>
                             <constraint firstItem="f9a-mH-1Gr" firstAttribute="top" secondItem="V0g-Xp-gfX" secondAttribute="bottom" constant="186" id="kww-Pe-BGD"/>
+                            <constraint firstItem="NWQ-GO-PBC" firstAttribute="leading" secondItem="rXc-En-a3S" secondAttribute="leadingMargin" constant="-16" id="w0F-oW-ccP"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="V0g-Xp-gfX"/>
+                                <exclude reference="NWQ-GO-PBC"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="kww-Pe-BGD"/>
                                 <exclude reference="41n-8o-lal"/>
                                 <exclude reference="Us0-Wy-eBl"/>
                                 <exclude reference="fL0-JD-Zqp"/>
+                                <exclude reference="ZCU-WQ-Cc0"/>
+                                <exclude reference="w0F-oW-ccP"/>
+                                <exclude reference="fsl-R8-JUR"/>
+                                <exclude reference="kww-Pe-BGD"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="V0g-Xp-gfX"/>
+                                <include reference="NWQ-GO-PBC"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="kww-Pe-BGD"/>
                                 <include reference="41n-8o-lal"/>
                                 <include reference="Us0-Wy-eBl"/>
                                 <include reference="fL0-JD-Zqp"/>
+                                <include reference="ZCU-WQ-Cc0"/>
+                                <include reference="w0F-oW-ccP"/>
+                                <include reference="fsl-R8-JUR"/>
+                                <include reference="kww-Pe-BGD"/>
                             </mask>
                         </variation>
                     </view>
@@ -298,12 +338,12 @@
                                                     <exclude reference="IdG-dV-I3B"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="Rpr-jk-l7C"/>
-                                                    <exclude reference="XIK-Rn-Wnf"/>
                                                     <exclude reference="Rje-Qy-H66"/>
                                                     <exclude reference="WIt-Q0-4ye"/>
                                                     <exclude reference="flA-Tn-2sY"/>
                                                     <exclude reference="t7z-AN-KzE"/>
+                                                    <exclude reference="Rpr-jk-l7C"/>
+                                                    <exclude reference="XIK-Rn-Wnf"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
@@ -312,12 +352,12 @@
                                                     <include reference="IdG-dV-I3B"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="Rpr-jk-l7C"/>
-                                                    <include reference="XIK-Rn-Wnf"/>
                                                     <include reference="Rje-Qy-H66"/>
                                                     <include reference="WIt-Q0-4ye"/>
                                                     <include reference="flA-Tn-2sY"/>
                                                     <include reference="t7z-AN-KzE"/>
+                                                    <include reference="Rpr-jk-l7C"/>
+                                                    <include reference="XIK-Rn-Wnf"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -581,7 +621,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="collection" width="37" height="37"/>
-        <image name="stack" width="50" height="37"/>
+        <image name="collection" width="30" height="30"/>
+        <image name="stack" width="30" height="30"/>
     </resources>
 </document>

@@ -34,6 +34,7 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDataSource
     func getMemesFromDelegate() {
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as AppDelegate
+        appDelegate.sortMemes();
         self.memes = appDelegate.memes
     }
     

@@ -47,7 +47,17 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
         topText.textAlignment = NSTextAlignment.Center;
         bottomText.textAlignment = NSTextAlignment.Center;
         
-        self.meme = MemeEntry(textFields: MemeEntry.getInitialTextFields(), originalImage: nil, memedImage: nil);
+        if (self.meme == nil) {
+            self.meme = MemeEntry(textFields: MemeEntry.getInitialTextFields(), originalImage: nil, memedImage: nil, uuid: NSUUID().UUIDString);
+        } else {
+            if let top = self.meme.textFields[MemeEntry.topTextID] {
+                self.topText.text = top;
+            }
+            if let bottom = self.meme.textFields[MemeEntry.bottomTextID] {
+                self.bottomText.text = bottom;
+            }
+            self.imageView.image = self.meme.originalImage;
+        }
     }
     
     func close() {
