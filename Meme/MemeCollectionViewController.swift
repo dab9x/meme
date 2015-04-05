@@ -17,7 +17,7 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad();
         var homeButton : UIBarButtonItem = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "createMeme")
-        self.parentViewController?.navigationItem.rightBarButtonItem = homeButton;
+        self.navigationItem.rightBarButtonItem = homeButton;
         getMemesFromDelegate()
     }
     
@@ -28,7 +28,9 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDataSource
     }
     
     func createMeme() {
-        self.parentViewController?.navigationController?.performSegueWithIdentifier("memeCreatorSegue", sender: self);
+        var memeCreator = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as MemeCreatorController
+        memeCreator.hidesBottomBarWhenPushed = true;
+        self.navigationController?.pushViewController(memeCreator, animated: true);
     }
     
     func getMemesFromDelegate() {
@@ -54,6 +56,7 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         var memeDetailsVC:MemeDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("memeDetails") as MemeDetailsViewController;
         memeDetailsVC.meme = self.memes[indexPath.row];
+        memeDetailsVC.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(memeDetailsVC, animated: true);
     }
 }

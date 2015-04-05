@@ -16,6 +16,9 @@ class MemeDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad();
+        var editButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editMeme:");
+        var deleteButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Trash, target: self, action: "deleteMeme:");
+        self.navigationItem.rightBarButtonItems = [deleteButton, editButton];
     }
     
     override func viewWillAppear(animated: Bool) {

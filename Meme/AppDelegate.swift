@@ -35,16 +35,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return self.memes[index];
     }
     
+    func addMeme(meme:MemeEntry) {
+        if (self.containsMeme(meme)) {
+            self.deleteMeme(meme);
+        }
+        self.memes.append(meme);
+    }
+    
+    func containsMeme(meme:MemeEntry) -> Bool {
+        var index:Int = getIndex(meme);
+        return index != -1;
+    }
+    
     func sortMemes() {
         self.memes.sort({(meme1:MemeEntry, meme2:MemeEntry) -> Bool in
-            return meme1.uuid > meme2.uuid;
+            return meme1.timestamp! > meme2.timestamp!;
         });
     }
     
     func getIndex(meme:MemeEntry) -> Int {
         self.sortMemes();
         for (index, nextMeme) in enumerate(self.memes) {
-            if (nextMeme.uuid! == meme.uuid!) {
+            if (nextMeme.timestamp! == meme.timestamp!) {
                 return index;
             }
         }

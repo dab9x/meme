@@ -48,7 +48,8 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
         bottomText.textAlignment = NSTextAlignment.Center;
         
         if (self.meme == nil) {
-            self.meme = MemeEntry(textFields: MemeEntry.getInitialTextFields(), originalImage: nil, memedImage: nil, uuid: NSUUID().UUIDString);
+            var timestamp = UInt64(floor(NSDate().timeIntervalSince1970 * 1000));
+            self.meme = MemeEntry(textFields: MemeEntry.getInitialTextFields(), originalImage: nil, memedImage: nil, timestamp: timestamp);
         } else {
             if let top = self.meme.textFields[MemeEntry.topTextID] {
                 self.topText.text = top;
@@ -68,7 +69,11 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
         super.viewWillAppear(animated);
         subscribeToKeyboardNotifications();
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "close");
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "share:");
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "share");
+        // if we are editing set the image scale to fit
+        if let img = imageView.image {
+            imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -92,6 +97,7 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage;
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
@@ -149,28 +155,37 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
         return keyboardSize.CGRectValue().height
     }
     
-    func share(sender: AnyObject) {
+    func share() {
         if (self.imageView.image == nil) {
             return;
         }
+        self.meme.originalImage = imageView.image;
         var item:UIImage! = generateMemedImage();
         let activityVC = UIActivityViewController(activityItems: [item], applicationActivities: nil);
-        activityVC.completionWithItemsHandler = { (activityType:String!, completed:Bool, items:[AnyObject]!, error:NSError!) -> Void in
-            if (completed) {
-                self.save(item);
-                self.dismissViewControllerAnimated(true, completion: nil);
+        //support ios 7... How to support the latest version completionWithItemsHandler
+        activityVC.completionHandler = { (activityType:String!, completed:Bool) -> Void in
+                if (completed) {
+                    self.save(item);
+                    self.dismissViewControllerAnimated(true, completion: nil);
+                }
             }
-        }
+        
         self.presentViewController(activityVC, animated: true, completion: nil);
     }
     
     func save(memedImage:UIImage!) {
         self.meme.memedImage = memedImage;
         self.meme.originalImage = imageView.image;
+        if(!self.topText.text.isEmpty) {
+            self.meme.textFields[MemeEntry.topTextID] = self.topText.text;
+        }
+        if (!self.bottomText.text.isEmpty) {
+            self.meme.textFields[MemeEntry.bottomTextID] = self.bottomText.text;
+        }
         
         let object = UIApplication.sharedApplication().delegate;
         let appDelegate = object as AppDelegate;
-        appDelegate.memes.append(self.meme);
+        appDelegate.addMeme(meme);
         self.close();
     }
     

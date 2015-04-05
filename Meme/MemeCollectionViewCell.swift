@@ -24,16 +24,20 @@ class MemeCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var memeImageView: UIImageView!
     
     func setImage(meme:MemeEntry) {
-        self.memeImageView.image = meme.originalImage;
+        if let img = meme.originalImage {
+            self.memeImageView.image = img;
+            return;
+        }
+        self.memeImageView.image = meme.memedImage;
     }
     
     func setText(meme:MemeEntry) {
-        if let bottomText = meme.textFields[MemeEntry.bottomTextID] {
+        if let bottomText = meme.getBottomText() {
             self.bottomText.defaultTextAttributes = memeTextAttributes;
             self.bottomText.textAlignment = NSTextAlignment.Center;
             self.bottomText.text = bottomText;
         }
-        if let topText = meme.textFields[MemeEntry.topTextID] {
+        if let topText = meme.getTopText() {
             self.topText.defaultTextAttributes = memeTextAttributes;
             self.topText.textAlignment = NSTextAlignment.Center;
             self.topText.text = topText;

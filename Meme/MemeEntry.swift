@@ -18,9 +18,17 @@ struct MemeEntry {
     var textFields:[String:String];
     var originalImage:UIImage?;
     var memedImage:UIImage?;
-    var uuid:String?
+    var timestamp:UInt64?
     
     static func getInitialTextFields() -> [String:String] {
         return [MemeEntry.topTextID : "", MemeEntry.bottomTextID : ""]
+    }
+    
+    func getTopText() -> String? {
+        return self.textFields[MemeEntry.topTextID];
+    }
+    
+    func getBottomText() -> String? {
+        return self.textFields[MemeEntry.bottomTextID];
     }
 }

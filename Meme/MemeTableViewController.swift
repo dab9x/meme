@@ -13,20 +13,24 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     var memes:[MemeEntry]!
     private var first:Bool = true;
+    @IBOutlet weak var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        self.parentViewController?.navigationItem.rightBarButtonItem =  UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "createMeme");
+        self.navigationItem.rightBarButtonItem =  UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "createMeme");
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
+        //Load the sent memes from the app delegate that will be displayed
         getMemesFromDelegate();
+        //If it is the first time we are loading the view it will not contain any sent memes
+        //go to create meme
         if (self.first) {
             self.createMeme();
         } else {
-            self.parentViewController?.title = "Sent Memes";
+            self.table.reloadData();
         }
     }
     
@@ -42,9 +46,10 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func createMeme() {
-        self.parentViewController?.title = "";
         self.first = false;
-        self.parentViewController?.navigationController?.performSegueWithIdentifier("memeCreatorSegue", sender: self);
+        var memeCreator = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as MemeCreatorController
+        memeCreator.hidesBottomBarWhenPushed = true;
+        self.navigationController?.pushViewController(memeCreator, animated: true);
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,21 +60,26 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:MemeTableCell = tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) as MemeTableCell;
-        
+        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) as UITableViewCell;
         var memeItem = self.memes[indexPath.row];
-        cell.setText(memeItem);
-        cell.setImage(memeItem);
+        
+        if let top = memeItem.getTopText() {
+            cell.textLabel?.text = top;
+        }
+        
+        if let bottom = memeItem.getBottomText() {
+            cell.detailTextLabel?.text = bottom;
+        }
+        cell.imageView?.frame = CGRectMake(0, 0, 50, 50)
+        cell.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        cell.imageView?.image = memeItem.memedImage;
         return cell;
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var memeDetailsVC:MemeDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("memeDetails") as MemeDetailsViewController;
+        memeDetailsVC.hidesBottomBarWhenPushed = true;
         memeDetailsVC.meme = self.memes[indexPath.row];
         self.navigationController?.pushViewController(memeDetailsVC, animated: true);
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 110;
     }
 }
