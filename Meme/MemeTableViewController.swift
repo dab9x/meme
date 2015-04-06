@@ -12,7 +12,6 @@ import UIKit
 class MemeTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var memes:[MemeEntry]!
-    private var first:Bool = true;
     @IBOutlet weak var table: UITableView!
     
     override func viewDidLoad() {
@@ -27,7 +26,7 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
         getMemesFromDelegate();
         //If it is the first time we are loading the view it will not contain any sent memes
         //go to create meme
-        if (self.first) {
+        if (self.memes.count == 0) {
             self.createMeme();
         } else {
             self.table.reloadData();
@@ -46,7 +45,6 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func createMeme() {
-        self.first = false;
         var memeCreator = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as MemeCreatorController
         memeCreator.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(memeCreator, animated: true);

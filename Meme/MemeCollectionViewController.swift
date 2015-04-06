@@ -16,7 +16,7 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        var homeButton : UIBarButtonItem = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "createMeme")
+        var homeButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "createMeme")
         self.navigationItem.rightBarButtonItem = homeButton;
         getMemesFromDelegate()
     }
