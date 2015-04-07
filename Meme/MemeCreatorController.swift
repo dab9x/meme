@@ -66,6 +66,7 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "close");
         self.navigationItem.rightBarButtonItem?.enabled = !getAppDelegate().memes.isEmpty;
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "share");
+        self.navigationItem.leftBarButtonItem?.enabled = false;
         // if we are editing set the image scale to fit
         if let img = imageView.image {
             imageView.contentMode = UIViewContentMode.ScaleAspectFit
@@ -105,6 +106,10 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         self.topText.hidden = false;
         self.bottomText.hidden = false;
+        dispatch_async(dispatch_get_main_queue(), {
+            self.navigationItem.leftBarButtonItem!.enabled = true;
+            })
+        
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
