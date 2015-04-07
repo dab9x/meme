@@ -11,24 +11,16 @@ import UIKit;
 
 struct MemeEntry {
     
-    static let topTextID = "topText"
-    static let bottomTextID = "bottomText"
-    static let defaultValues = [MemeEntry.topTextID : "TOP", MemeEntry.bottomTextID : "BOTTOM"]
-    
     var textFields:[String:String];
     var originalImage:UIImage?;
     var memedImage:UIImage?;
     var timestamp:UInt64?
     
-    static func getInitialTextFields() -> [String:String] {
-        return [MemeEntry.topTextID : "", MemeEntry.bottomTextID : ""]
+    static func getInitialTextFields(topKey:String, bottomKey:String) -> [String:String] {
+        return [topKey : "", bottomKey : ""]
     }
     
-    func getTopText() -> String? {
-        return self.textFields[MemeEntry.topTextID];
-    }
-    
-    func getBottomText() -> String? {
-        return self.textFields[MemeEntry.bottomTextID];
+    func getText(key:String) -> String? {
+        return self.textFields[key];
     }
 }

@@ -61,11 +61,11 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
         let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) as UITableViewCell;
         var memeItem = self.memes[indexPath.row];
         
-        if let top = memeItem.getTopText() {
+        if let top = memeItem.getText(topTextID) {
             cell.textLabel?.text = top;
         }
         
-        if let bottom = memeItem.getBottomText() {
+        if let bottom = memeItem.getText(bottomTextID) {
             cell.detailTextLabel?.text = bottom;
         }
         cell.imageView?.frame = CGRectMake(0, 0, 50, 50)

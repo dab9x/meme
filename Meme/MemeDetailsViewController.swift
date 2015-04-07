@@ -16,22 +16,23 @@ class MemeDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        var editButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editMeme:");
-        var deleteButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Trash, target: self, action: "deleteMeme:");
+        var editButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editMeme");
+        var deleteButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Trash, target: self, action: "deleteMeme");
         self.navigationItem.rightBarButtonItems = [deleteButton, editButton];
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.imageView.image = self.meme.memedImage;
     }
     
-    @IBAction func editMeme(sender: AnyObject) {
+    func editMeme() {
         var memeCreatorVC = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as MemeCreatorController;
         memeCreatorVC.meme = self.meme;
         self.navigationController?.pushViewController(memeCreatorVC, animated: true);
     }
     
-    @IBAction func deleteMeme(sender: AnyObject) {
+    func deleteMeme() {
         getDelegate().deleteMeme(self.meme);
         self.navigationController?.popViewControllerAnimated(true);
     }

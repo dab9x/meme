@@ -32,12 +32,12 @@ class MemeCollectionViewCell: UICollectionViewCell {
     }
     
     func setText(meme:MemeEntry) {
-        if let bottomText = meme.getBottomText() {
+        if let bottomText = meme.getText(bottomTextID) {
             self.bottomText.defaultTextAttributes = memeTextAttributes;
             self.bottomText.textAlignment = NSTextAlignment.Center;
             self.bottomText.text = bottomText;
         }
-        if let topText = meme.getTopText() {
+        if let topText = meme.getText(topTextID) {
             self.topText.defaultTextAttributes = memeTextAttributes;
             self.topText.textAlignment = NSTextAlignment.Center;
             self.topText.text = topText;
