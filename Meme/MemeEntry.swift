@@ -8,19 +8,52 @@
 
 import Foundation
 import UIKit;
+import CoreData
 
-struct MemeEntry {
+@objc(MemeEntry)
+
+class MemeEntry: NSManagedObject {
     
-    var textFields:[String:String];
-    var originalImage:UIImage?;
-    var memedImage:UIImage?;
-    var timestamp:UInt64?
-    
-    static func getInitialTextFields(topKey:String, bottomKey:String) -> [String:String] {
-        return [topKey : "", bottomKey : ""]
+    struct Keys {
+        static let TOP = "TOP"
+        static let BOTTOM = "BOTTOM"
     }
     
-    func getText(key:String) -> String? {
-        return self.textFields[key];
+    @NSManaged var top:String?
+    @NSManaged var bottom:String?
+    @NSManaged var timestamp:NSNumber
+    
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(top:String?, bottom:String?, timestamp:NSNumber, context:NSManagedObjectContext) {
+        
+        let entity = NSEntityDescription.entityForName("MemeEntry", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        
+        self.top = top
+        self.bottom = bottom
+        self.timestamp = timestamp
+    }
+    
+    var originalImage:UIImage? {
+        get {
+            return ImageCache.sharedInstance().imageWithIdentifier("\(self.timestamp).original")
+        }
+        
+        set {
+            ImageCache.sharedInstance().storeImage(newValue, withIdentifier: "\(self.timestamp).original")
+        }
+    }
+    
+    var memedImage:UIImage? {
+        get {
+            return ImageCache.sharedInstance().imageWithIdentifier("\(self.timestamp).memed")
+        }
+        
+        set {
+            ImageCache.sharedInstance().storeImage(newValue, withIdentifier: "\(self.timestamp).memed")
+        }
     }
 }

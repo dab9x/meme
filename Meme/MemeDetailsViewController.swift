@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class MemeDetailsViewController: UIViewController {
     
@@ -21,25 +22,30 @@ class MemeDetailsViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = [deleteButton, editButton];
     }
     
+    var sharedContext:NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedModelContext!
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.imageView.image = self.meme.memedImage;
     }
     
     func editMeme() {
-        var memeCreatorVC = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as MemeCreatorController;
+        var memeCreatorVC = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as! MemeCreatorController;
         memeCreatorVC.meme = self.meme;
         self.navigationController?.pushViewController(memeCreatorVC, animated: true);
     }
     
     func deleteMeme() {
-        getDelegate().deleteMeme(self.meme);
+        self.sharedContext.deleteObject(self.meme)
+        CoreDataStackManager.sharedInstance().saveContext()
         self.navigationController?.popViewControllerAnimated(true);
     }
     
     func getDelegate() -> AppDelegate {
         let object = UIApplication.sharedApplication().delegate;
-        let appDelegate = object as AppDelegate;
+        let appDelegate = object as! AppDelegate;
         return appDelegate;
     }
 }

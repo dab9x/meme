@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class MemeTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -18,12 +19,38 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad();
         
         self.navigationItem.rightBarButtonItem =  UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "createMeme");
+        
+        self.memes = self.fetchAllMemes()
+        self.sortMemes()
+    }
+    
+    var sharedContext:NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedModelContext!
+    }
+    
+    func fetchAllMemes() -> [MemeEntry] {
+        
+        let fetchRequest = NSFetchRequest(entityName: "MemeEntry")
+        var error:NSError? = nil
+        
+        let resutls = self.sharedContext.executeFetchRequest(fetchRequest, error: &error)
+        
+        if error != nil {
+            println("Can not fetch all Memes: \(error)")
+        }
+        return resutls as! [MemeEntry]
+    }
+    
+    func sortMemes() {
+        self.memes.sort({(meme1:MemeEntry, meme2:MemeEntry) -> Bool in
+            return (meme1.timestamp as! Int) > (meme2.timestamp as! Int);
+        });
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
-        //Load the sent memes from the app delegate that will be displayed
-        getMemesFromDelegate();
+        self.memes = self.fetchAllMemes()
+        self.sortMemes()
         //If it is the first time we are loading the view it will not contain any sent memes
         //go to create meme
         if (self.memes.count == 0) {
@@ -37,16 +64,10 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
         return self.memes.isEmpty
     }
     
-    func getMemesFromDelegate() {
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as AppDelegate
-        appDelegate.sortMemes();
-        self.memes = appDelegate.memes
-    }
-    
     func createMeme() {
-        var memeCreator = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as MemeCreatorController
+        var memeCreator = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as! MemeCreatorController
         memeCreator.hidesBottomBarWhenPushed = true;
+        memeCreator.showButtons = !self.memes.isEmpty
         self.navigationController?.pushViewController(memeCreator, animated: true);
     }
     
@@ -58,14 +79,14 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) as UITableViewCell;
+        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) as! UITableViewCell;
         var memeItem = self.memes[indexPath.row];
         
-        if let top = memeItem.getText(topTextID) {
+        if let top = memeItem.top {
             cell.textLabel?.text = top;
         }
         
-        if let bottom = memeItem.getText(bottomTextID) {
+        if let bottom = memeItem.bottom {
             cell.detailTextLabel?.text = bottom;
         }
         cell.imageView?.frame = CGRectMake(0, 0, 50, 50)
@@ -75,7 +96,7 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var memeDetailsVC:MemeDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("memeDetails") as MemeDetailsViewController;
+        var memeDetailsVC:MemeDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailsViewController;
         memeDetailsVC.hidesBottomBarWhenPushed = true;
         memeDetailsVC.meme = self.memes[indexPath.row];
         self.navigationController?.pushViewController(memeDetailsVC, animated: true);

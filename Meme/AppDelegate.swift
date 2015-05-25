@@ -12,55 +12,10 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var memes = [MemeEntry]();
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         return true
-    }
-    
-    func deleteMeme(meme:MemeEntry) {
-        var index:Int = getIndex(meme);
-        if (index == -1) {
-            return;
-        }
-        self.memes.removeAtIndex(index);
-    }
-    
-    func getMeme(meme:MemeEntry) -> MemeEntry {
-        var index:Int = getIndex(meme);
-        if (index == -1) {
-            return meme;
-        }
-        return self.memes[index];
-    }
-    
-    func addMeme(meme:MemeEntry) {
-        if (self.containsMeme(meme)) {
-            self.deleteMeme(meme);
-        }
-        self.memes.append(meme);
-    }
-    
-    func containsMeme(meme:MemeEntry) -> Bool {
-        var index:Int = getIndex(meme);
-        return index != -1;
-    }
-    
-    func sortMemes() {
-        self.memes.sort({(meme1:MemeEntry, meme2:MemeEntry) -> Bool in
-            return meme1.timestamp! > meme2.timestamp!;
-        });
-    }
-    
-    func getIndex(meme:MemeEntry) -> Int {
-        self.sortMemes();
-        for (index, nextMeme) in enumerate(self.memes) {
-            if (nextMeme.timestamp! == meme.timestamp!) {
-                return index;
-            }
-        }
-        return -1;
     }
 
     func applicationWillResignActive(application: UIApplication) {
