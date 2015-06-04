@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jui-mo-vzN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jui-mo-vzN">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -59,7 +59,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1h1-5o-3DJ"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1h1-5o-3DJ"/>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.59999999999999998" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="eCT-Qh-UD5">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <constraints>
@@ -219,38 +219,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V0g-Xp-gfX">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V0g-Xp-gfX">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="400" id="D3f-rE-y8D"/>
-                                    <constraint firstAttribute="height" constant="213" id="NJf-aI-2Dd"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="D3f-rE-y8D"/>
-                                        <exclude reference="NJf-aI-2Dd"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="D3f-rE-y8D"/>
-                                        <include reference="NJf-aI-2Dd"/>
-                                    </mask>
-                                </variation>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="V0g-Xp-gfX" secondAttribute="centerY" id="CJp-72-0BE"/>
-                            <constraint firstAttribute="centerX" secondItem="V0g-Xp-gfX" secondAttribute="centerX" id="kvU-ih-RpB"/>
+                            <constraint firstItem="V0g-Xp-gfX" firstAttribute="leading" secondItem="rXc-En-a3S" secondAttribute="leadingMargin" constant="-16" id="UQd-LN-O58"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="V0g-Xp-gfX" secondAttribute="trailing" constant="-16" id="bZh-NB-CTX"/>
+                            <constraint firstItem="V0g-Xp-gfX" firstAttribute="bottom" secondItem="rXc-En-a3S" secondAttribute="bottomMargin" id="fTl-so-S5T"/>
+                            <constraint firstItem="V0g-Xp-gfX" firstAttribute="top" secondItem="HmY-qS-Aj8" secondAttribute="bottom" id="xQi-mU-KfM"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="V0g-Xp-gfX"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="CJp-72-0BE"/>
-                                <exclude reference="kvU-ih-RpB"/>
+                                <exclude reference="UQd-LN-O58"/>
+                                <exclude reference="bZh-NB-CTX"/>
+                                <exclude reference="fTl-so-S5T"/>
+                                <exclude reference="xQi-mU-KfM"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -258,8 +246,10 @@
                                 <include reference="V0g-Xp-gfX"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="CJp-72-0BE"/>
-                                <include reference="kvU-ih-RpB"/>
+                                <include reference="UQd-LN-O58"/>
+                                <include reference="bZh-NB-CTX"/>
+                                <include reference="fTl-so-S5T"/>
+                                <include reference="xQi-mU-KfM"/>
                             </mask>
                         </variation>
                     </view>

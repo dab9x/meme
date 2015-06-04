@@ -230,12 +230,6 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
         self.close();
     }
     
-    func getAppDelegate() -> AppDelegate {
-        let object = UIApplication.sharedApplication().delegate;
-        let appDelegate = object as! AppDelegate;
-        return appDelegate;
-    }
-    
     func generateMemedImage() -> UIImage {
         hideElements(true);
         hideText(true);
