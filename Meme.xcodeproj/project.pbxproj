@@ -21,6 +21,10 @@
 		66DC73D91B137D2E002D313F /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DC73D81B137D2E002D313F /* ImageCache.swift */; };
 		66DC73DB1B1384FF002D313F /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DC73DA1B1384FF002D313F /* CoreDataStackManager.swift */; };
 		66DC73DE1B13897D002D313F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66DC73DC1B13897D002D313F /* Model.xcdatamodeld */; };
+		66F55AA21B8BE6D5005C2F49 /* CollectionView.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F55AA11B8BE6D5005C2F49 /* CollectionView.png */; };
+		66F55AA41B8BE6E1005C2F49 /* TableView.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F55AA31B8BE6E1005C2F49 /* TableView.png */; };
+		66F55AA61B8BE730005C2F49 /* MemeEditor.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F55AA51B8BE730005C2F49 /* MemeEditor.png */; };
+		66F55AA81B8BE764005C2F49 /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = 66F55AA71B8BE764005C2F49 /* readme.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +56,10 @@
 		66DC73D81B137D2E002D313F /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		66DC73DA1B1384FF002D313F /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStackManager.swift; path = ../CoreDataStackManager.swift; sourceTree = "<group>"; };
 		66DC73DD1B13897D002D313F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		66F55AA11B8BE6D5005C2F49 /* CollectionView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CollectionView.png; sourceTree = "<group>"; };
+		66F55AA31B8BE6E1005C2F49 /* TableView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TableView.png; sourceTree = "<group>"; };
+		66F55AA51B8BE730005C2F49 /* MemeEditor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MemeEditor.png; sourceTree = "<group>"; };
+		66F55AA71B8BE764005C2F49 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +83,7 @@
 		66A899591ACA56CD0036C6A7 = {
 			isa = PBXGroup;
 			children = (
+				66F55AA71B8BE764005C2F49 /* readme.md */,
 				66DC73DC1B13897D002D313F /* Model.xcdatamodeld */,
 				66A899641ACA56CD0036C6A7 /* Meme */,
 				66A8997A1ACA56CD0036C6A7 /* MemeTests */,
@@ -114,6 +123,9 @@
 		66A899651ACA56CD0036C6A7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				66F55AA51B8BE730005C2F49 /* MemeEditor.png */,
+				66F55AA31B8BE6E1005C2F49 /* TableView.png */,
+				66F55AA11B8BE6D5005C2F49 /* CollectionView.png */,
 				66A899661ACA56CD0036C6A7 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -225,8 +237,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F55AA21B8BE6D5005C2F49 /* CollectionView.png in Resources */,
+				66F55AA41B8BE6E1005C2F49 /* TableView.png in Resources */,
 				66A8996D1ACA56CD0036C6A7 /* Main.storyboard in Resources */,
 				66A899721ACA56CD0036C6A7 /* LaunchScreen.xib in Resources */,
+				66F55AA61B8BE730005C2F49 /* MemeEditor.png in Resources */,
 				66A8996F1ACA56CD0036C6A7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F55AA81B8BE764005C2F49 /* readme.md in Sources */,
 				66A8998F1ACA7D480036C6A7 /* MemeCollectionViewCell.swift in Sources */,
 				66A899891ACA56F30036C6A7 /* MemeEntry.swift in Sources */,
 				66DC73DB1B1384FF002D313F /* CoreDataStackManager.swift in Sources */,
