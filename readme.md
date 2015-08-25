@@ -1,6 +1,8 @@
 # Meme
 
-Create memes using your own device, take a photo from your photostream or take one with the camera on your device add a top and/or bottom message, save it or share it with your friends. The goal of this application is start to explore the UIKit framework and the basic usage of table view and collection views. As an addition added a simple Core Data model so that the app remember your created memes when you close the application.
+Create memes using your own device, take a photo from your photostream or take one with the camera on your device add a top and/or bottom message, save it or share it with your friends. 
+
+The goal of this application is start to explore the UIKit framework and the basic usage of table view and collection views. As an addition added a simple Core Data model so that the app remember your created memes when you close the application.
 
 ![alt tag](https://raw.github.com/nmorenor/meme/master/Meme/MemeEditor.png)
 ![alt tag](https://raw.github.com/nmorenor/meme/master/Meme/TableView.png)
