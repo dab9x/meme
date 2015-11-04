@@ -52,7 +52,7 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
     
     func initializeMemeEntry() {
         if (self.meme == nil) {
-            var timestamp = Int(floor(NSDate().timeIntervalSince1970 * 1000)) as NSNumber;
+            let timestamp = Int(floor(NSDate().timeIntervalSince1970 * 1000)) as NSNumber;
             self.meme = MemeEntry(top: nil, bottom:nil, timestamp: timestamp, context: self.temporaryContext);
         } else {
             if let top = self.meme.top {
@@ -78,7 +78,7 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "share");
         self.navigationItem.leftBarButtonItem?.enabled = false;
         // if we are editing set the image scale to fit
-        if let img = imageView.image {
+        if let _ = imageView.image {
             imageView.contentMode = UIViewContentMode.ScaleAspectFit
         }
     }
@@ -111,7 +111,7 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
         self.presentViewController(imagePicker, animated: true, completion: nil);
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage;
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         self.topText.hidden = false;
@@ -143,14 +143,13 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
     
     func textFieldDidEndEditing(textField: UITextField) {
         let identifier = textField.restorationIdentifier!
-        var currentValue:String? = nil
         if identifier == topTextID {
-            if textField.text.isEmpty {
+            if textField.text!.isEmpty {
                 textField.text = defaultValues[topTextID]
             }
             self.meme.top = textField.text
         } else {
-            if textField.text.isEmpty {
+            if textField.text!.isEmpty {
                 textField.text = defaultValues[bottomTextID]
             }
             self.meme.bottom = textField.text
@@ -199,10 +198,10 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
             return;
         }
         self.meme.originalImage = imageView.image;
-        var item:UIImage! = generateMemedImage();
+        let item:UIImage! = generateMemedImage();
         let activityVC = UIActivityViewController(activityItems: [item], applicationActivities: nil);
         //support ios 7... How to support the latest version completionWithItemsHandler
-        activityVC.completionHandler = { (activityType:String!, completed:Bool) -> Void in
+        activityVC.completionHandler = { (activityType:String?, completed:Bool) -> Void in
                 if (completed) {
                     self.save(item);
                     self.dismissViewControllerAnimated(true, completion: nil);
@@ -215,16 +214,16 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
     func save(memedImage:UIImage!) {
         self.meme.memedImage = memedImage;
         self.meme.originalImage = imageView.image;
-        if(!self.topText.text.isEmpty) {
+        if(!self.topText.text!.isEmpty) {
             self.meme.top = self.topText.text;
         }
-        if (!self.bottomText.text.isEmpty) {
+        if (!self.bottomText.text!.isEmpty) {
             self.meme.bottom = self.bottomText.text;
         }
         if (self.isEdit) {
             CoreDataStackManager.sharedInstance().saveContext()
         } else {
-            var newMeme = MemeEntry(top: self.meme.top, bottom: self.meme.bottom, timestamp: self.meme.timestamp, context: CoreDataStackManager.sharedInstance().managedModelContext!)
+            _ = MemeEntry(top: self.meme.top, bottom: self.meme.bottom, timestamp: self.meme.timestamp, context: CoreDataStackManager.sharedInstance().managedModelContext!)
             CoreDataStackManager.sharedInstance().saveContext()
         }
         self.close();
@@ -253,8 +252,8 @@ class MemeCreatorController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     func hideText(hidden:Bool) {
-        var topText:String = self.meme.top ?? "";
-        var bottomText:String = self.meme.bottom ?? "";
+        let topText:String = self.meme.top ?? "";
+        let bottomText:String = self.meme.bottom ?? "";
         if (topText.isEmpty) {
             self.topText.hidden = hidden;
         }

@@ -33,17 +33,23 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
         let fetchRequest = NSFetchRequest(entityName: "MemeEntry")
         var error:NSError? = nil
         
-        let resutls = self.sharedContext.executeFetchRequest(fetchRequest, error: &error)
+        let resutls: [AnyObject]?
+        do {
+            resutls = try self.sharedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error = error1
+            resutls = nil
+        }
         
         if error != nil {
-            println("Can not fetch all Memes: \(error)")
+            print("Can not fetch all Memes: \(error)")
         }
         return resutls as! [MemeEntry]
     }
     
     func sortMemes() {
-        self.memes.sort({(meme1:MemeEntry, meme2:MemeEntry) -> Bool in
-            return (meme1.timestamp as! Int) > (meme2.timestamp as! Int);
+        self.memes.sortInPlace({(meme1:MemeEntry, meme2:MemeEntry) -> Bool in
+            return (meme1.timestamp as Int) > (meme2.timestamp as Int);
         });
     }
     
@@ -65,7 +71,7 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func createMeme() {
-        var memeCreator = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as! MemeCreatorController
+        let memeCreator = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as! MemeCreatorController
         memeCreator.hidesBottomBarWhenPushed = true;
         memeCreator.showButtons = !self.memes.isEmpty
         self.navigationController?.pushViewController(memeCreator, animated: true);
@@ -79,8 +85,8 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) as! UITableViewCell;
-        var memeItem = self.memes[indexPath.row];
+        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) ;
+        let memeItem = self.memes[indexPath.row];
         
         if let top = memeItem.top {
             cell.textLabel?.text = top;
@@ -96,7 +102,7 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var memeDetailsVC:MemeDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailsViewController;
+        let memeDetailsVC:MemeDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailsViewController;
         memeDetailsVC.hidesBottomBarWhenPushed = true;
         memeDetailsVC.meme = self.memes[indexPath.row];
         self.navigationController?.pushViewController(memeDetailsVC, animated: true);

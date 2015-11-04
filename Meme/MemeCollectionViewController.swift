@@ -17,7 +17,7 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        var homeButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "createMeme")
+        let homeButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "createMeme")
         self.navigationItem.rightBarButtonItem = homeButton;
         self.memes = fetchAllMemes()
         self.sortMemes()
@@ -32,17 +32,23 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDataSource
         let fetchRequest = NSFetchRequest(entityName: "MemeEntry")
         var error:NSError? = nil
         
-        let resutls = self.sharedContext.executeFetchRequest(fetchRequest, error: &error)
+        let resutls: [AnyObject]?
+        do {
+            resutls = try self.sharedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error = error1
+            resutls = nil
+        }
         
         if error != nil {
-            println("Can not fetch all Memes: \(error)")
+            print("Can not fetch all Memes: \(error)")
         }
         return resutls as! [MemeEntry]
     }
     
     func sortMemes() {
-        self.memes.sort({(meme1:MemeEntry, meme2:MemeEntry) -> Bool in
-            return (meme1.timestamp as! Int) > (meme2.timestamp as! Int);
+        self.memes.sortInPlace({(meme1:MemeEntry, meme2:MemeEntry) -> Bool in
+            return (meme1.timestamp as Int) > (meme2.timestamp as Int);
         });
     }
     
@@ -54,7 +60,7 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDataSource
     }
     
     func createMeme() {
-        var memeCreator = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as! MemeCreatorController
+        let memeCreator = self.storyboard?.instantiateViewControllerWithIdentifier("memeCreator") as! MemeCreatorController
         memeCreator.hidesBottomBarWhenPushed = true;
         memeCreator.showButtons = !self.memes.isEmpty
         self.navigationController?.pushViewController(memeCreator, animated: true);
@@ -67,14 +73,14 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell:MemeCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("memeCollection", forIndexPath: indexPath) as! MemeCollectionViewCell;
         
-        var memeItem = self.memes[indexPath.row];
+        let memeItem = self.memes[indexPath.row];
         cell.setImage(memeItem);
         cell.setText(memeItem);
         return cell;
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        var memeDetailsVC:MemeDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailsViewController;
+        let memeDetailsVC:MemeDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailsViewController;
         memeDetailsVC.meme = self.memes[indexPath.row];
         memeDetailsVC.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(memeDetailsVC, animated: true);
