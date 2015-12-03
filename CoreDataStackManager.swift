@@ -52,7 +52,7 @@ class CoreDataStackManager {
             error = NSError(domain: "MEME_ERROR_DOMAIN", code: 9999, userInfo: dict)
             
             // Left in for development development.
-            NSLog("Unresolved error \(error), \(error!.userInfo)")
+            Swift.print("Unresolved error \(error), \(error!.userInfo)")
             abort()
         } catch {
             fatalError()
@@ -73,14 +73,11 @@ class CoreDataStackManager {
     
     func saveContext() {
         if let context = self.managedModelContext {
-            var error:NSError? = nil
-            
             if context.hasChanges {
                 do {
                     try context.save()
-                } catch let error1 as NSError {
-                    error = error1
-                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                } catch {
+                    Swift.print("Unresolved error \(error), \((error as NSError).userInfo)")
                     abort()
                 }
             }
